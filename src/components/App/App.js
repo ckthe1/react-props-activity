@@ -3,9 +3,7 @@ import './App.css';
 
 class App extends Component {
   state = {
-    numberUp:0,
-    numberDown:0,
-    // newNumber:[],
+    addHistory:[],
     total:0,
   }//end state
 
@@ -23,16 +21,26 @@ class App extends Component {
     })
   }//end handleChangeDecrease
 
-  // handleChange= (event)=>{
-  //   console.log('changed');
-  //   this.setState({
-  //     DisplayNumber:{
 
-  //     }
-  //   })
-  // }
+  overWriteTotal = (event) => {
+console.log(event.target.value);
+
+    this.setState ({
+      total: event.target.value,
+    })
+
+  }
 
 
+  addToHistory= () => {
+    // add total to the number array
+    this.setState ({
+    addHistory: [
+      ...this.state.addHistory,
+      this.state.total
+    ]
+    })
+  }
 
   render() {
     return (
@@ -43,9 +51,14 @@ class App extends Component {
           <p>Enter a number and click up or down. The total will increase or decrease by that amount</p>
         
         <div>
-          <button onClick={this.handleChangeIncrease} >Up</button> 
-          <input type="number" placeholder="Enter Number" 
-          onChange={this.handleChange}
+          <button onClick={this.handleChangeIncrease} >
+            Up
+          </button> 
+
+          <input 
+            type="number" 
+            placeholder="Enter Number" 
+            onChange={this.overWriteTotal}
           /> 
 
           <button onClick={this.handleChangeDecrease}>Down</button>
@@ -53,11 +66,14 @@ class App extends Component {
 
         <div>
           <p >{this.state.total} </p>
-          <button onClick={this.onSave}>Save</button>
+          <button onClick={this.addToHistory}>Save</button>
             <p>Click save above to save the current total in the history</p>
         </div>
         
         <div>
+          <p>{this.state.addHistory.map(taco => <li key={taco}>{taco}</li>)}</p>
+          
+
           <h1>history</h1>
 
         </div>
